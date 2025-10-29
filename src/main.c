@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 09:14:20 by mbatty            #+#    #+#             */
-/*   Updated: 2025/10/29 13:28:58 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/10/29 13:55:28 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,11 +159,13 @@ void	remove_arg(t_arg **args, t_arg *target)
 			if (prev)
 			{
 				prev->next = start->next;
+				free(target);
 				return ;
 			}
 			else
 			{
 				*args = start->next;
+				free(target);
 				return ;
 			}
 		}
@@ -175,6 +177,7 @@ void	remove_arg(t_arg **args, t_arg *target)
 t_opts	*ft_getopt(const char *bool_opts, const char *arg_opts, char **av)
 {
 	t_opts		*opts;
+	t_arg		*first_arg;
 
 	opts = malloc(sizeof(t_opts));
 	if (!opts)
@@ -196,10 +199,6 @@ t_opts	*ft_getopt(const char *bool_opts, const char *arg_opts, char **av)
 		return (NULL);
 	}
 
-	t_arg		*first_arg;
-	t_arg		*prev_arg;
-
-	prev_arg = NULL;
 	first_arg = opts->args;
 	while (first_arg)
 	{
@@ -210,6 +209,12 @@ t_opts	*ft_getopt(const char *bool_opts, const char *arg_opts, char **av)
 				int i = 1;
 				while (first_arg->arg[i])
 				{
+					t_option	*tmp = ft_find_opt(first_arg->arg[i], opts);
+					if (tmp && tmp->set)
+					{
+						tmp->arg = NULL;
+						tmp->set = false;
+					}
 					if (!ft_parse_opt(opts, first_arg, first_arg->arg[i]))
 					{
 						ft_free_opt(opts);
@@ -217,11 +222,12 @@ t_opts	*ft_getopt(const char *bool_opts, const char *arg_opts, char **av)
 					}
 					i++;
 				}
-				printf("Should remove %s\n", first_arg->arg);
-				remove_arg(&opts->args, first_arg);
+				t_arg	*tmp = first_arg;
+				first_arg = first_arg->next;
+				remove_arg(&opts->args, tmp);
+				continue ;
 			}
 		}
-		prev_arg = first_arg;
 		first_arg = first_arg->next;
 	}
 	return (opts);
@@ -231,23 +237,25 @@ int	main(int ac, char **av)
 {
 	(void)ac;
 	t_opts *opts = ft_getopt("s", "pi", av);
-
+	if (!opts)
+		return (1);
+		
 	t_option *ip_opt = ft_find_opt('i', opts);
 	if (ip_opt)
-		printf("IP set: %d with string %s\n", ip_opt->set, ip_opt->arg);
+		printf("IP: %d, %s\n", ip_opt->set, ip_opt->arg);
 
 	t_option *port_opt = ft_find_opt('p', opts);
 	if (port_opt)
-		printf("Port set: %d with string %s\n", port_opt->set, port_opt->arg);
+		printf("Port: %d, %s\n", port_opt->set, port_opt->arg);
 
 	t_option *skibidi_opt = ft_find_opt('s', opts);
 	if (skibidi_opt)
-		printf("Skibidi set: %d\n", skibidi_opt->set);
+		printf("Skibidi: %d\n", skibidi_opt->set);
 
 	t_arg	*tmp = opts->args;
 	while (tmp)
 	{
-		printf("First remaining arg %s\n", tmp->arg);
+		printf("Remaining arg %s\n", tmp->arg);
 		tmp = tmp->next;
 	}
 
