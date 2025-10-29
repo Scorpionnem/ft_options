@@ -6,14 +6,14 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 09:33:25 by mbatty            #+#    #+#             */
-/*   Updated: 2025/10/29 14:22:22 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/10/29 14:51:39 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_OPTIONS_INTERNAL_H
 # define FT_OPTIONS_INTERNAL_H
 
-# include "ft_options.h"
+# include "libftgetopt.h"
 
 void	ft_bzero(void *s, size_t n);
 char	*ft_strchr(const char *s, int c);

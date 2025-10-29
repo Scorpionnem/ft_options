@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_options.h                                       :+:      :+:    :+:   */
+/*   libftgetopt.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 09:14:15 by mbatty            #+#    #+#             */
-/*   Updated: 2025/10/29 14:19:59 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/10/29 14:52:02 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_OPTIONS_H
-# define FT_OPTIONS_H
+#ifndef LIBFTGETOPT_H
+# define LIBFTGETOPT_H
 
 # include <stdbool.h>
 # include <stdlib.h>
