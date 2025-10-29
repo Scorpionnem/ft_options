@@ -6,18 +6,18 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 11:53:28 by mbatty            #+#    #+#             */
-/*   Updated: 2025/10/29 11:00:52 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/10/29 11:28:33 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_options_internal.h"
 
-void	ft_free_opt(t_opts *options)
+static void	options_free(t_option *opts)
 {
 	t_option	*tmp;
 	t_option	*opt;
 	
-	opt = options->opts;
+	opt = opts;
 	if (!opt)
 		return ;
 	tmp = opt;
@@ -27,4 +27,15 @@ void	ft_free_opt(t_opts *options)
 		free(opt);
 		opt = tmp;
 	}
+}
+
+void	ft_free_opt(t_opts *options)
+{
+	if (!options)
+		return ;
+	if (options->opts)
+		options_free(options->opts);
+	if (options->args)
+		args_free(options->args);
+	free(options);
 }

@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 09:14:15 by mbatty            #+#    #+#             */
-/*   Updated: 2025/10/29 11:00:28 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/10/29 11:40:12 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ typedef struct	s_opts
 		Remaining args from ft_getopt
 	*/
 	t_arg		*args;
+
+	const char	*bool_opts;
+	const char	*arg_opts;
 }	t_opts;
 
 /*
