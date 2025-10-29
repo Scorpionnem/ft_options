@@ -6,90 +6,19 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 09:14:20 by mbatty            #+#    #+#             */
-/*   Updated: 2025/10/29 10:22:49 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/10/29 11:06:34 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_options_internal.h"
 
-// static void	ctx_set_flag(t_ctx *ctx, char flag)
-// {
-// 	if (flag == 'l')
-// 		ctx->flags.l_flag = true;
-// 	if (flag == 'R')
-// 		ctx->flags.R_flag = true;
-// 	if (flag == 'a')
-// 		ctx->flags.a_flag = true;
-// 	if (flag == 'r')
-// 		ctx->flags.r_flag = true;
-// 	if (flag == 't')
-// 		ctx->flags.t_flag = true;
-// }
-
-// static int	ctx_parse_flag(t_ctx *ctx, char *flags)
-// {
-// 	int	i;
-
-// 	i = -1;
-// 	while (flags[++i])
-// 	{
-// 		if (!ft_strchr(VALID_FLAGS, flags[i]))
-// 		{
-// 			ft_putstr_fd("ft_ls: invalid option '", 2);
-// 			ft_putchar_fd(flags[i], 2);
-// 			ft_putendl_fd("'", 2);
-// 			return (0);
-// 		}
-// 		ctx_set_flag(ctx, flags[i]);
-// 	}
-// 	return (1);
-// }
-
-// static int	ctx_add_argument(t_ctx *ctx, char *av)
-// {
-// 	t_list	*new = ft_lstnew(av);
-// 	if (!new)
-// 	{
-// 		ft_lstclear(&ctx->args, empty_del);
-// 		return (0);
-// 	}
-// 	ft_lstadd_back(&ctx->args, new);
-// 	return (1);
-// }
-
-// int	ctx_parse_args(t_ctx *ctx, char **av)
-// {
-// 	int		i;
-// 	t_list	*tmp;
-
-// 	i = -1;
-// 	while (av[++i])
-// 	{
-// 		if (av[i][0] == '-' && av[i][1])
-// 		{
-// 			if (!ctx_parse_flag(ctx, ++av[i]))
-// 				return (0);
-// 		}
-// 		else
-// 			ctx_add_argument(ctx, av[i]);
-// 	}
-// 	if (ft_lstsize(ctx->args) <= 0)
-// 	{
-// 		tmp = ft_lstnew(".");
-// 		if (!tmp)
-// 		{
-// 			ft_lstclear(&ctx->args, empty_del);
-// 			return (0);
-// 		}
-// 		ft_lstadd_back(&ctx->args, tmp);
-// 	}
-// 	return (1);	
-// }
-
 # include <stdio.h>
 
-t_option	*ft_find_opt(const char opt, t_option *options)
+t_option	*ft_find_opt(const char opt, t_opts *opts)
 {
+	t_option	*options;
+
+	options = opts->opts;
 	while (options)
 	{
 		if (options->opt == opt)
@@ -146,7 +75,7 @@ static bool	is_arg_opt(t_arg *args)
 	return (false);
 }
 
-static int	ft_fill_bool_opt(t_option *opts, char c_opt)
+static int	ft_fill_bool_opt(t_opts *opts, char c_opt)
 {
 	t_option	*opt;
 
@@ -157,7 +86,7 @@ static int	ft_fill_bool_opt(t_option *opts, char c_opt)
 	return (1);
 }
 
-static int	ft_fill_arg_opt(t_option *opts, char c_opt, t_arg *args)
+static int	ft_fill_arg_opt(t_opts *opts, char c_opt, t_arg *args)
 {
 	t_option	*opt;
 	t_arg	*prev;
@@ -184,51 +113,57 @@ static int	ft_fill_arg_opt(t_option *opts, char c_opt, t_arg *args)
 	return (0);
 }
 
-t_option	*ft_getopt(const char *bool_opts, const char *arg_opts, char **av)
+t_opts	*ft_getopt(const char *bool_opts, const char *arg_opts, char **av)
 {
 	(void)av;
 	
-	t_option	*res;
+	t_opts		*opts;
+	t_option	*options;
 	t_arg		*args;
 	t_arg		*first_arg;
 
-	res = NULL;
+	opts = malloc(sizeof(t_opts));
+	options = NULL;
 	args = NULL;
-	if (!ft_create_opt(&res, bool_opts, arg_opts))
+	if (!ft_create_opt(&options, bool_opts, arg_opts))
 		return (NULL);
 	if (!ft_get_args(&args, av))
 		return (NULL);
 
+	opts->args = args;
+	opts->opts = options;
 	first_arg = args;
 	while (first_arg)
 	{
 		if (first_arg->arg[0] == '-' && first_arg->arg[1])
 		{
-			int i = 1;
-			while (first_arg->arg[i])
+			if (is_arg_opt(first_arg))
 			{
-				if (ft_strchr(bool_opts, first_arg->arg[i]))
-					ft_fill_bool_opt(res, first_arg->arg[i]);
-				else if (ft_strchr(arg_opts, first_arg->arg[i]))
-					ft_fill_arg_opt(res, first_arg->arg[i], first_arg);
-				else
+				int i = 1;
+				while (first_arg->arg[i])
 				{
-					printf("Unknown option\n");
-					return (NULL);
+						if (ft_strchr(bool_opts, first_arg->arg[i]))
+							ft_fill_bool_opt(opts, first_arg->arg[i]);
+						else if (ft_strchr(arg_opts, first_arg->arg[i]))
+							ft_fill_arg_opt(opts, first_arg->arg[i], first_arg);	
+						else
+						{
+							printf("Unknown option %c\n", first_arg->arg[i]);
+							return (NULL);
+						}
+					i++;
 				}
-				i++;
 			}
 		}
 		first_arg = first_arg->next;
 	}
-	args_free(args);
-	return (res);
+	return (opts);
 }
 
 int	main(int ac, char **av)
 {
 	(void)ac;
-	t_option *opts = ft_getopt("s", "pi", av);
+	t_opts *opts = ft_getopt("s", "pi", av);
 
 	t_option *ip_opt = ft_find_opt('i', opts);
 	if (ip_opt)
@@ -241,5 +176,6 @@ int	main(int ac, char **av)
 	t_option *skibidi_opt = ft_find_opt('s', opts);
 	if (skibidi_opt)
 		printf("Skibidi set: %d\n", skibidi_opt->set);
+
 	ft_free_opt(opts);
 }

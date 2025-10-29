@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   options_free.c                                     :+:      :+:    :+:   */
+/*   ft_free_opt.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 11:53:28 by mbatty            #+#    #+#             */
-/*   Updated: 2025/10/29 09:37:11 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/10/29 11:00:52 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_options_internal.h"
 
-void	ft_free_opt(t_option *options)
+void	ft_free_opt(t_opts *options)
 {
 	t_option	*tmp;
+	t_option	*opt;
 	
-	if (!options)
+	opt = options->opts;
+	if (!opt)
 		return ;
-	tmp = options;
-	while (options)
+	tmp = opt;
+	while (opt)
 	{
-		tmp = (options)->next;
-		free(options);
-		options = tmp;
+		tmp = (opt)->next;
+		free(opt);
+		opt = tmp;
 	}
 }

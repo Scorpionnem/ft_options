@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 09:33:25 by mbatty            #+#    #+#             */
-/*   Updated: 2025/10/29 09:56:38 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/10/29 10:59:11 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,6 @@
 # define FT_OPTIONS_INTERNAL_H
 
 # include "ft_options.h"
-
-typedef struct s_arg
-{
-	char		*arg;
-
-	struct s_arg	*next;
-}	t_arg;
 
 void	ft_bzero(void *s, size_t n);
 char	*ft_strchr(const char *s, int c);

@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 09:14:15 by mbatty            #+#    #+#             */
-/*   Updated: 2025/10/29 09:35:14 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/10/29 11:00:28 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,22 @@ typedef struct s_option
 	struct s_option	*next;
 }	t_option;
 
+typedef struct s_arg
+{
+	char		*arg;
+
+	struct s_arg	*next;
+}	t_arg;
+
+typedef struct	s_opts
+{
+	t_option	*opts;
+	/*
+		Remaining args from ft_getopt
+	*/
+	t_arg		*args;
+}	t_opts;
+
 /*
 	Parses options
 
@@ -35,7 +51,7 @@ typedef struct s_option
 	@param arg_opts list of options that need an argument
 	@param args	av given to main
 */
-t_option	*ft_getopt(const char *bool_opts, const char *arg_opts, char **args);
+t_opts	*ft_getopt(const char *bool_opts, const char *arg_opts, char **args);
 
 /*
 	Finds an option in the list of options
@@ -45,8 +61,8 @@ t_option	*ft_getopt(const char *bool_opts, const char *arg_opts, char **args);
 
 	@return pointer to the node containing the option or NULL if not found or on error
 */
-t_option	*ft_find_opt(const char opt, t_option *options);
+t_option	*ft_find_opt(const char opt, t_opts *options);
 
-void	ft_free_opt(t_option *options);
+void	ft_free_opt(t_opts *options);
 
 #endif
