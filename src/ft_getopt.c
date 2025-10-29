@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_getopt.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 09:14:20 by mbatty            #+#    #+#             */
-/*   Updated: 2025/10/29 14:40:02 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/10/29 14:59:14 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ int	ft_parse_opt(t_opts *opts, t_arg *first_arg, char c_opt)
 		ft_putstr_error("ft_getopt: unknown option: '");
 		ft_putchar_error(c_opt);
 		ft_putstr_error("'\n");
-		return (1);
+		return (0);
 	}
 	return (1);
 }
