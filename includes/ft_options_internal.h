@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 09:33:25 by mbatty            #+#    #+#             */
-/*   Updated: 2025/10/29 14:51:39 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/10/29 16:54:05 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 # include "libftgetopt.h"
 
-void	ft_bzero(void *s, size_t n);
-char	*ft_strchr(const char *s, int c);
-size_t	ft_strlen(const char *str);
+void	ft_bzero_opt(void *s, size_t n);
+char	*ft_strchr_opt(const char *s, int c);
+size_t	ft_strlen_opt(const char *str);
 
 void	ft_putchar_error(char c);
 void	ft_putstr_error(char *str);

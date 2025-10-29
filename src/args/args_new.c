@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 15:03:14 by mbatty            #+#    #+#             */
-/*   Updated: 2025/10/29 09:47:48 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/10/29 16:54:38 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_arg	*args_new(char *arg)
 	new_opt = malloc(sizeof(t_arg));
 	if (!new_opt)
 		return (NULL);
-	ft_bzero(new_opt, sizeof(t_arg));
+	ft_bzero_opt(new_opt, sizeof(t_arg));
 	new_opt->arg = arg;
 	return (new_opt);
 }

@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 09:14:20 by mbatty            #+#    #+#             */
-/*   Updated: 2025/10/29 14:59:14 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/10/29 16:54:19 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,12 +129,12 @@ static int	ft_fill_arg_opt(t_opts *opts, char c_opt, t_arg *args)
 
 int	ft_parse_opt(t_opts *opts, t_arg *first_arg, char c_opt)
 {
-	if (ft_strchr(opts->bool_opts, c_opt))
+	if (ft_strchr_opt(opts->bool_opts, c_opt))
 	{
 		if (!ft_fill_bool_opt(opts, c_opt))
 			return (0);
 	}
-	else if (ft_strchr(opts->arg_opts, c_opt))
+	else if (ft_strchr_opt(opts->arg_opts, c_opt))
 	{
 		if (!ft_fill_arg_opt(opts, c_opt, first_arg))
 			return (0);
@@ -189,7 +189,7 @@ t_opts	*ft_getopt(const char *bool_opts, const char *arg_opts, char **av)
 		ft_putstr_error("ft_getopt: alloc error\n");
 		return (NULL);
 	}
-	ft_bzero(opts, sizeof(t_opts));
+	ft_bzero_opt(opts, sizeof(t_opts));
 	opts->arg_opts = arg_opts;
 	opts->bool_opts = bool_opts;
 	if (!ft_create_opt(&opts->opts, bool_opts, arg_opts))
