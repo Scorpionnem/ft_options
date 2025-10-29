@@ -1,11 +1,11 @@
-NAME = ft_test
+NAME = libftgetopt.a
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 
 INCLUDES =	-I ./includes/
 
-SRCS =	src/main.c\
+SRCS =	src/ft_getopt.c\
 		src/options/options_add_back.c\
 		src/options/ft_free_opt.c\
 		src/options/options_last.c\
@@ -28,7 +28,7 @@ re: fclean all
 
 $(NAME): $(OBJS)
 	@echo Compiling $(NAME)
-	@$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^
+	@ar rcs $(NAME) $(OBJS)
 
 $(OBJDIR)/%.o: %.c
 	@mkdir -p $(dir $@)

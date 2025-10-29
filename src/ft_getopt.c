@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 09:14:20 by mbatty            #+#    #+#             */
-/*   Updated: 2025/10/29 14:01:59 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/10/29 14:40:02 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	ft_create_opt(t_option **opts, const char *bool_opts, const char *arg
 		new = options_new(bool_opts[i]);
 		if (!new)
 		{
-			printf("ft_getopt: alloc error\n");
+			ft_putstr_error("ft_getopt: alloc error\n");
 			return (0);
 		}
 		options_add_back(opts, new);
@@ -53,7 +53,7 @@ static int	ft_create_opt(t_option **opts, const char *bool_opts, const char *arg
 		new = options_new(arg_opts[i]);
 		if (!new)
 		{
-			printf("ft_getopt: alloc error\n");
+			ft_putstr_error("ft_getopt: alloc error\n");
 			return (0);
 		}
 		options_add_back(opts, new);
@@ -72,7 +72,7 @@ static int	ft_get_args(t_arg **args, char **av)
 		new = args_new(av[i]);
 		if (!new)
 		{
-			printf("ft_getopt: alloc error\n");
+			ft_putstr_error("ft_getopt: alloc error\n");
 			return (0);
 		}
 		args_add_back(args, new);
@@ -121,7 +121,9 @@ static int	ft_fill_arg_opt(t_opts *opts, char c_opt, t_arg *args)
 		prev = args;
 		args = args->next;
 	}
-	printf("ft_getopt: no arg given for option '%c'\n", c_opt);
+	ft_putstr_error("ft_getopt: no arg given for option: '");
+	ft_putchar_error(c_opt);
+	ft_putstr_error("'\n");
 	return (0);
 }
 
@@ -139,7 +141,9 @@ int	ft_parse_opt(t_opts *opts, t_arg *first_arg, char c_opt)
 	}
 	else
 	{
-		printf("ft_getopt: unknown option: `%c`\n", c_opt);
+		ft_putstr_error("ft_getopt: unknown option: '");
+		ft_putchar_error(c_opt);
+		ft_putstr_error("'\n");
 		return (1);
 	}
 	return (1);
@@ -182,7 +186,7 @@ t_opts	*ft_getopt(const char *bool_opts, const char *arg_opts, char **av)
 	opts = malloc(sizeof(t_opts));
 	if (!opts)
 	{
-		printf("ft_getopt: alloc error\n");
+		ft_putstr_error("ft_getopt: alloc error\n");
 		return (NULL);
 	}
 	ft_bzero(opts, sizeof(t_opts));
@@ -231,39 +235,4 @@ t_opts	*ft_getopt(const char *bool_opts, const char *arg_opts, char **av)
 		first_arg = first_arg->next;
 	}
 	return (opts);
-}
-
-int	main(int ac, char **av)
-{
-	(void)ac;
-	t_opts *opts = ft_getopt("s", "pi", av);
-	if (!opts)
-		return (1);
-		
-	t_option *ip_opt = ft_find_opt('i', opts);
-	if (ip_opt && ip_opt->set)
-		printf("IP: %d, %s\n", ip_opt->set, ip_opt->arg);
-	else
-		printf("IP: Not set! (-i ...)\n");
-
-	t_option *port_opt = ft_find_opt('p', opts);
-	if (port_opt && port_opt->set)
-		printf("Port: %d, %s\n", port_opt->set, port_opt->arg);
-	else
-		printf("Port: Not set! (-p ...)\n");
-
-	t_option *skibidi_opt = ft_find_opt('s', opts);
-	if (skibidi_opt && skibidi_opt->set)
-		printf("Skibidi: %d\n", skibidi_opt->set);
-	else
-		printf("Skibidi: Not set! (-s)\n");
-
-	t_arg	*tmp = opts->args;
-	while (tmp)
-	{
-		printf("Remaining arg %s\n", tmp->arg);
-		tmp = tmp->next;
-	}
-
-	ft_free_opt(opts);
 }

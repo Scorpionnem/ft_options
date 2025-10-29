@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 09:33:25 by mbatty            #+#    #+#             */
-/*   Updated: 2025/10/29 10:59:11 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/10/29 14:22:22 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@ void	ft_bzero(void *s, size_t n);
 char	*ft_strchr(const char *s, int c);
 size_t	ft_strlen(const char *str);
 
+void	ft_putchar_error(char c);
+void	ft_putstr_error(char *str);
+
 t_option	*options_new(const char opt);
 int			options_size(t_option *lst);
 t_option	*options_last(t_option *lst);
@@ -28,6 +31,6 @@ void	args_add_back(t_arg **lst, t_arg *new);
 void	args_free(t_arg *options);
 t_arg	*args_last(t_arg *lst);
 t_arg	*args_new(char *arg);
-int	args_size(t_arg *lst);
+int		args_size(t_arg *lst);
 
 #endif

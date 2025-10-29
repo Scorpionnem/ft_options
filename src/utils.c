@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 09:36:57 by mbatty            #+#    #+#             */
-/*   Updated: 2025/10/29 09:45:47 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/10/29 14:21:54 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,14 @@ size_t	ft_strlen(const char *str)
 	while (str[i])
 		i++;
 	return (i);
+}
+
+void	ft_putstr_error(char *str)
+{
+	write(2, str, ft_strlen(str));
+}
+
+void	ft_putchar_error(char c)
+{
+	write(2, &c, 1);
 }

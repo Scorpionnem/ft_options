@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 09:14:15 by mbatty            #+#    #+#             */
-/*   Updated: 2025/10/29 11:40:12 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/10/29 14:19:59 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+/*
+	Option structure, contains wether its set and it's argument
+*/
 typedef struct s_option
 {
 	char	opt;
@@ -26,6 +29,9 @@ typedef struct s_option
 	struct s_option	*next;
 }	t_option;
 
+/*
+	Linked list of arguments
+*/
 typedef struct s_arg
 {
 	char		*arg;
@@ -33,6 +39,9 @@ typedef struct s_arg
 	struct s_arg	*next;
 }	t_arg;
 
+/*
+	Structure containing everything about ft_getopt, options and remaining args
+*/
 typedef struct	s_opts
 {
 	t_option	*opts;
@@ -66,6 +75,11 @@ t_opts	*ft_getopt(const char *bool_opts, const char *arg_opts, char **args);
 */
 t_option	*ft_find_opt(const char opt, t_opts *options);
 
+/*
+	Frees the whole t_opt structure
+
+	@param options options structure to free
+*/
 void	ft_free_opt(t_opts *options);
 
 #endif
