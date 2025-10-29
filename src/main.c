@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 09:14:20 by mbatty            #+#    #+#             */
-/*   Updated: 2025/10/29 13:55:28 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/10/29 14:01:59 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ static int	ft_fill_arg_opt(t_opts *opts, char c_opt, t_arg *args)
 		prev = args;
 		args = args->next;
 	}
-	printf("ft_getopt: no arg given for flag '%c'\n", c_opt);
+	printf("ft_getopt: no arg given for option '%c'\n", c_opt);
 	return (0);
 }
 
@@ -241,16 +241,22 @@ int	main(int ac, char **av)
 		return (1);
 		
 	t_option *ip_opt = ft_find_opt('i', opts);
-	if (ip_opt)
+	if (ip_opt && ip_opt->set)
 		printf("IP: %d, %s\n", ip_opt->set, ip_opt->arg);
+	else
+		printf("IP: Not set! (-i ...)\n");
 
 	t_option *port_opt = ft_find_opt('p', opts);
-	if (port_opt)
+	if (port_opt && port_opt->set)
 		printf("Port: %d, %s\n", port_opt->set, port_opt->arg);
+	else
+		printf("Port: Not set! (-p ...)\n");
 
 	t_option *skibidi_opt = ft_find_opt('s', opts);
-	if (skibidi_opt)
+	if (skibidi_opt && skibidi_opt->set)
 		printf("Skibidi: %d\n", skibidi_opt->set);
+	else
+		printf("Skibidi: Not set! (-s)\n");
 
 	t_arg	*tmp = opts->args;
 	while (tmp)
